@@ -61,7 +61,7 @@ public class dmn implements Callable<Integer> {
                 .fromResources(List.of(new FileSystemResource(dmnModel)))
                 .getOrElseThrow(RuntimeException::new);
             @SuppressWarnings("unchecked")
-            Map<String, Object> readValue = JsonMapper.builder().build().readValue(context, Map.class);
+            Map<String, Object> readValue = JsonMapper.builder().build().readValue(readInputContext(), Map.class);
             DMNContext dmnContext = new DynamicDMNContextBuilder(dmnRuntime.newContext(), dmnRuntime.getModels().get(0))
                 .populateContextWith(readValue);
             DMNResult dmnResult = dmnRuntime.evaluateAll(dmnRuntime.getModels().get(0), dmnContext);
@@ -72,5 +72,22 @@ public class dmn implements Callable<Integer> {
             return 1;
         }
         return 0;
+    }
+
+    private String readInputContext() {
+
+        String wholeContext;
+
+        if (context != null) {
+            wholeContext = String.join(" ", context);
+        } else {
+            var scanner = new Scanner(System.in).useDelimiter("\\A");
+            wholeContext = "";
+            if (scanner.hasNext()) {
+                wholeContext = scanner.next();
+            }
+        }
+
+        return wholeContext.isEmpty() ? " {} ": wholeContext;
     }
 }
