@@ -8,6 +8,7 @@
 import java.io.File;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.concurrent.Callable;
 
 import com.fasterxml.jackson.databind.json.JsonMapper;
@@ -18,23 +19,27 @@ import org.kie.dmn.api.core.DMNResult;
 import org.kie.dmn.api.core.DMNRuntime;
 import org.kie.dmn.core.internal.utils.DMNRuntimeBuilder;
 import org.kie.dmn.core.internal.utils.DynamicDMNContextBuilder;
+import org.kie.dmn.core.internal.utils.MarshallingStubUtils;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
-import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
 @Command(name = "dmn", mixinStandardHelpOptions = true)
 public class dmn implements Callable<Integer> {
 
-    @Option(names = {"-f", "--file"}, description = "The DMN model to evalute", required = true)
+    @Parameters(
+        index = "0",
+        description = "The DMN model file to evaluate.",
+        arity = "1")
     private File dmnModel;
 
     @Parameters(
-        index = "0",
-        description = "The DMN context, as a JSON structure."
+        index = "1",
+        description = "The DMN Context as JSON, for evaluation (InputData variables). If left empty, will read from STDIN.",
+        arity = "0..1"
     )
-    private String context = "{}";
+    private String context;
 
     public static void main(String[] args) throws Exception {
         int exitCode = new CommandLine(new dmn()).execute(args);
@@ -44,7 +49,13 @@ public class dmn implements Callable<Integer> {
     @Override
     public Integer call() {
         try {
-            System.out.println("Start. "+dmnModel.getAbsolutePath());
+            if (context == null) {
+                var scanner = new Scanner(System.in).useDelimiter("\\A");
+                context = "{}";
+                if (scanner.hasNext()) {
+                    context = scanner.next();
+                }
+            }
             DMNRuntime dmnRuntime = DMNRuntimeBuilder.fromDefaults()
                 .buildConfiguration()
                 .fromResources(List.of(new FileSystemResource(dmnModel)))
@@ -54,7 +65,8 @@ public class dmn implements Callable<Integer> {
             DMNContext dmnContext = new DynamicDMNContextBuilder(dmnRuntime.newContext(), dmnRuntime.getModels().get(0))
                 .populateContextWith(readValue);
             DMNResult dmnResult = dmnRuntime.evaluateAll(dmnRuntime.getModels().get(0), dmnContext);
-            System.out.println(dmnResult);
+            final Object serialized = MarshallingStubUtils.stubDMNResult(dmnResult.getContext().getAll(), Object::toString);
+            System.out.println(JsonMapper.builder().build().writerWithDefaultPrettyPrinter().writeValueAsString(serialized));
         } catch (Exception e) {
             e.printStackTrace();
             return 1;
