@@ -1,0 +1,293 @@
+<dmn:definitions xmlns:dmn="http://www.omg.org/spec/DMN/20180521/MODEL/" xmlns="xls2dmn_b469448d-3c30-4763-9519-e37a50fa9843" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:feel="http://www.omg.org/spec/DMN/20180521/FEEL/" xmlns:dmndi="http://www.omg.org/spec/DMN/20180521/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:kie="http://www.drools.org/kie/dmn/1.2" id="_E93D3F4A-728A-4BBB-B79B-475BDB13DB70" name="xls2dmn" expressionLanguage="http://www.omg.org/spec/DMN/20180521/FEEL/" typeLanguage="http://www.omg.org/spec/DMN/20180521/FEEL/" namespace="xls2dmn_b469448d-3c30-4763-9519-e37a50fa9843">
+  <dmn:extensionElements/>
+  <dmn:inputData id="id_FICO_32Score" name="FICO Score">
+    <dmn:extensionElements/>
+    <dmn:variable id="idvar_FICO_32Score" name="FICO Score"/>
+  </dmn:inputData>
+  <dmn:inputData id="id_DTI_32Ratio" name="DTI Ratio">
+    <dmn:extensionElements/>
+    <dmn:variable id="idvar_DTI_32Ratio" name="DTI Ratio"/>
+  </dmn:inputData>
+  <dmn:inputData id="id_PITI_32Ratio" name="PITI Ratio">
+    <dmn:extensionElements/>
+    <dmn:variable id="idvar_PITI_32Ratio" name="PITI Ratio"/>
+  </dmn:inputData>
+  <dmn:decision id="d_Loan_32Approval" name="Loan Approval">
+    <dmn:extensionElements/>
+    <dmn:variable id="dvar_Loan_32Approval" name="Loan Approval"/>
+    <dmn:informationRequirement id="_F3F17771-C078-48BD-AE33-7E60448CE0E2">
+      <dmn:requiredInput href="#id_FICO_32Score"/>
+    </dmn:informationRequirement>
+    <dmn:informationRequirement id="_813FE0E9-675E-456B-B0B1-09C7904294E9">
+      <dmn:requiredDecision href="#d_DTI_32Rating"/>
+    </dmn:informationRequirement>
+    <dmn:informationRequirement id="_D8691AE5-1187-4FBC-AFDF-EF21D47863FA">
+      <dmn:requiredDecision href="#d_PITI_32Rating"/>
+    </dmn:informationRequirement>
+    <dmn:decisionTable id="ddt_Loan_32Approval" hitPolicy="ANY" preferredOrientation="Rule-as-Row" outputLabel="Loan Approval">
+      <dmn:input id="_E6507DB4-B3D9-4D18-B7C0-15EA33819378">
+        <dmn:inputExpression id="_5729BF6D-A150-43F6-B3FE-E465318EDA99">
+          <dmn:text>FICO Score</dmn:text>
+        </dmn:inputExpression>
+      </dmn:input>
+      <dmn:input id="_89B1CCF0-A359-4039-97C2-D3A52E1A1379">
+        <dmn:inputExpression id="_62E9F9BD-63AC-4A9A-BC73-28EF04BC589D">
+          <dmn:text>DTI Rating</dmn:text>
+        </dmn:inputExpression>
+      </dmn:input>
+      <dmn:input id="_50A74E38-304C-4B8C-B005-E6974B7E07A8">
+        <dmn:inputExpression id="_54FE3452-D9A1-47E7-941C-71B137F4A9DF">
+          <dmn:text>PITI Rating</dmn:text>
+        </dmn:inputExpression>
+      </dmn:input>
+      <dmn:output id="_FF44B52B-AFDA-424F-AC41-97E6AF1CB094"/>
+      <dmn:annotation name=""/>
+      <dmn:rule id="_A879AC13-05FD-45B4-AE08-A707BDE4F74E">
+        <dmn:inputEntry id="_9354B08E-34DC-4797-A669-5C847DBEF2DB">
+          <dmn:text>&lt;=750</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_B9BB3D6E-C1ED-4DC1-8A8B-F6D231843423">
+          <dmn:text>-</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_060441F4-2B70-4197-9D21-510EF97DB221">
+          <dmn:text>-</dmn:text>
+        </dmn:inputEntry>
+        <dmn:outputEntry id="_520C6CC5-EB85-425E-B73D-F8CE4C58A69D">
+          <dmn:text>"Not approved"</dmn:text>
+        </dmn:outputEntry>
+        <dmn:annotationEntry>
+          <dmn:text/>
+        </dmn:annotationEntry>
+      </dmn:rule>
+      <dmn:rule id="_4F3CB301-DAD4-4AE4-8501-FBFBAD2C1145">
+        <dmn:inputEntry id="_2A9B229B-B0E1-40C0-8AAD-2A54B279E1D3">
+          <dmn:text>-</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_2792523A-739D-46EA-A62D-184BD54E2374">
+          <dmn:text>"Bad"</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_0D432FBB-41F7-4CD5-B14E-CF74E35C56AC">
+          <dmn:text>-</dmn:text>
+        </dmn:inputEntry>
+        <dmn:outputEntry id="_689C4D21-24FA-468B-89E3-F64DDEFD3BF9">
+          <dmn:text>"Not approved"</dmn:text>
+        </dmn:outputEntry>
+        <dmn:annotationEntry>
+          <dmn:text/>
+        </dmn:annotationEntry>
+      </dmn:rule>
+      <dmn:rule id="_DA5516D1-1194-4922-8F05-E3BD2CC09D29">
+        <dmn:inputEntry id="_3670947B-FEBD-43A5-9218-8404F3FBEE7D">
+          <dmn:text>-</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_30AA8864-F389-4226-B350-75A7EE8090EF">
+          <dmn:text>-</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_211CA993-706C-48F9-A9BD-47AE5873C9A7">
+          <dmn:text>"Bad"</dmn:text>
+        </dmn:inputEntry>
+        <dmn:outputEntry id="_33E63080-57F6-4046-A599-1E356F2FC3D9">
+          <dmn:text>"Not approved"</dmn:text>
+        </dmn:outputEntry>
+        <dmn:annotationEntry>
+          <dmn:text/>
+        </dmn:annotationEntry>
+      </dmn:rule>
+      <dmn:rule id="_ACCAC45F-3816-4241-9E88-045F12C89D1B">
+        <dmn:inputEntry id="_CCC36B3F-98D2-4DD2-B2B0-CDEB13581861">
+          <dmn:text>&gt;750</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_D4DB93F8-C965-4E1B-9DC2-C644A4BF0A2B">
+          <dmn:text>"Good"</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_4BF6DABF-1EFE-4CBE-9EF3-039656F1CFA8">
+          <dmn:text>"Good"</dmn:text>
+        </dmn:inputEntry>
+        <dmn:outputEntry id="_1A754444-9B75-4705-B5DD-0B637A29F9AD">
+          <dmn:text>"Approved"</dmn:text>
+        </dmn:outputEntry>
+        <dmn:annotationEntry>
+          <dmn:text/>
+        </dmn:annotationEntry>
+      </dmn:rule>
+    </dmn:decisionTable>
+  </dmn:decision>
+  <dmn:decision id="d_DTI_32Rating" name="DTI Rating">
+    <dmn:extensionElements/>
+    <dmn:variable id="dvar_DTI_32Rating" name="DTI Rating"/>
+    <dmn:informationRequirement id="_366C5004-31F9-4B38-A987-6F7FD9A38251">
+      <dmn:requiredInput href="#id_DTI_32Ratio"/>
+    </dmn:informationRequirement>
+    <dmn:decisionTable id="ddt_DTI_32Rating" hitPolicy="ANY" preferredOrientation="Rule-as-Row" outputLabel="DTI Rating">
+      <dmn:input id="_D611307F-1A84-40E2-9BE4-5F574CFCCB26">
+        <dmn:inputExpression id="_10A537BE-468E-460D-A89D-42DA7D53ABD1">
+          <dmn:text>DTI Ratio</dmn:text>
+        </dmn:inputExpression>
+      </dmn:input>
+      <dmn:output id="_AE4EC78F-8B0F-4AA7-BC02-65A3EA5CC7E6"/>
+      <dmn:annotation name=""/>
+      <dmn:rule id="_BAB8BCE1-6649-4EB5-814C-05C48584CF5F">
+        <dmn:inputEntry id="_C7F71B6B-496D-4CCF-908E-6E00185FFF5D">
+          <dmn:text>&lt;=0.20</dmn:text>
+        </dmn:inputEntry>
+        <dmn:outputEntry id="_C67BCE9E-714E-4359-B782-FAAE39BC8CA8">
+          <dmn:text>"Good"</dmn:text>
+        </dmn:outputEntry>
+        <dmn:annotationEntry>
+          <dmn:text/>
+        </dmn:annotationEntry>
+      </dmn:rule>
+      <dmn:rule id="_8E13C4D3-E767-4FBD-A573-1A70D3C72E33">
+        <dmn:inputEntry id="_31EA7F87-5123-4153-BF85-13C63B4C726C">
+          <dmn:text>&gt;0.20</dmn:text>
+        </dmn:inputEntry>
+        <dmn:outputEntry id="_1FCF571D-2EB4-494D-8E76-BBAE2F6EFC90">
+          <dmn:text>"Bad"</dmn:text>
+        </dmn:outputEntry>
+        <dmn:annotationEntry>
+          <dmn:text/>
+        </dmn:annotationEntry>
+      </dmn:rule>
+    </dmn:decisionTable>
+  </dmn:decision>
+  <dmn:decision id="d_PITI_32Rating" name="PITI Rating">
+    <dmn:extensionElements/>
+    <dmn:variable id="dvar_PITI_32Rating" name="PITI Rating"/>
+    <dmn:informationRequirement id="_60EB2FE4-B49C-47A0-A2B6-5E35BFEED188">
+      <dmn:requiredInput href="#id_PITI_32Ratio"/>
+    </dmn:informationRequirement>
+    <dmn:decisionTable id="ddt_PITI_32Rating" hitPolicy="ANY" preferredOrientation="Rule-as-Row" outputLabel="PITI Rating">
+      <dmn:input id="_CF4198C2-C543-44D5-841C-0564C6AD0CA2">
+        <dmn:inputExpression id="_81814262-8A86-488B-9DCC-A8C9633FC687">
+          <dmn:text>PITI Ratio</dmn:text>
+        </dmn:inputExpression>
+      </dmn:input>
+      <dmn:output id="_CE6999D1-AF3E-4A85-BC47-D121C925ACD4"/>
+      <dmn:annotation name=""/>
+      <dmn:rule id="_C27BB937-A2F1-47C9-B0BF-3DB5FD8350EE">
+        <dmn:inputEntry id="_ECC10A74-4000-408B-8638-9C231F66E917">
+          <dmn:text>&lt;=0.28</dmn:text>
+        </dmn:inputEntry>
+        <dmn:outputEntry id="_14537DD2-9A72-4927-8A00-F15EA78D16CC">
+          <dmn:text>"Good"</dmn:text>
+        </dmn:outputEntry>
+        <dmn:annotationEntry>
+          <dmn:text/>
+        </dmn:annotationEntry>
+      </dmn:rule>
+      <dmn:rule id="_E4839079-B95D-445A-80B7-CE79BDE54AB3">
+        <dmn:inputEntry id="_39E9BCC6-EFFA-45C4-AA80-96DC58363901">
+          <dmn:text>&gt;0.28</dmn:text>
+        </dmn:inputEntry>
+        <dmn:outputEntry id="_4E32D8A9-9F39-425D-8496-082F2112CCFA">
+          <dmn:text>"Bad"</dmn:text>
+        </dmn:outputEntry>
+        <dmn:annotationEntry>
+          <dmn:text/>
+        </dmn:annotationEntry>
+      </dmn:rule>
+    </dmn:decisionTable>
+  </dmn:decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="_5C271B68-7EE8-4F13-9E44-4E55396CBC71" name="DRG">
+      <di:extension>
+        <kie:ComponentsWidthsExtension>
+          <kie:ComponentWidths dmnElementRef="ddt_Loan_32Approval">
+            <kie:width>50</kie:width>
+            <kie:width>100</kie:width>
+            <kie:width>100</kie:width>
+            <kie:width>100</kie:width>
+            <kie:width>100</kie:width>
+            <kie:width>100</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="ddt_DTI_32Rating">
+            <kie:width>50</kie:width>
+            <kie:width>100</kie:width>
+            <kie:width>100</kie:width>
+            <kie:width>100</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="ddt_PITI_32Rating">
+            <kie:width>50</kie:width>
+            <kie:width>100</kie:width>
+            <kie:width>100</kie:width>
+            <kie:width>100</kie:width>
+          </kie:ComponentWidths>
+        </kie:ComponentsWidthsExtension>
+      </di:extension>
+      <dmndi:DMNShape id="dmnshape-drg-id_FICO_32Score" dmnElementRef="id_FICO_32Score" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="50" y="225" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="dmnshape-drg-id_DTI_32Ratio" dmnElementRef="id_DTI_32Ratio" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="138" y="400" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="dmnshape-drg-id_PITI_32Ratio" dmnElementRef="id_PITI_32Ratio" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="313" y="400" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="dmnshape-drg-d_Loan_32Approval" dmnElementRef="d_Loan_32Approval" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="225" y="50" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="dmnshape-drg-d_DTI_32Rating" dmnElementRef="d_DTI_32Rating" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="225" y="225" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="dmnshape-drg-d_PITI_32Rating" dmnElementRef="d_PITI_32Rating" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="400" y="225" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="dmnedge-drg-_F3F17771-C078-48BD-AE33-7E60448CE0E2" dmnElementRef="_F3F17771-C078-48BD-AE33-7E60448CE0E2">
+        <di:waypoint x="100" y="250"/>
+        <di:waypoint x="275" y="75"/>
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="dmnedge-drg-_813FE0E9-675E-456B-B0B1-09C7904294E9" dmnElementRef="_813FE0E9-675E-456B-B0B1-09C7904294E9">
+        <di:waypoint x="275" y="250"/>
+        <di:waypoint x="275" y="75"/>
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="dmnedge-drg-_D8691AE5-1187-4FBC-AFDF-EF21D47863FA" dmnElementRef="_D8691AE5-1187-4FBC-AFDF-EF21D47863FA">
+        <di:waypoint x="450" y="250"/>
+        <di:waypoint x="275" y="75"/>
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="dmnedge-drg-_366C5004-31F9-4B38-A987-6F7FD9A38251" dmnElementRef="_366C5004-31F9-4B38-A987-6F7FD9A38251">
+        <di:waypoint x="188" y="425"/>
+        <di:waypoint x="275" y="250"/>
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="dmnedge-drg-_60EB2FE4-B49C-47A0-A2B6-5E35BFEED188" dmnElementRef="_60EB2FE4-B49C-47A0-A2B6-5E35BFEED188">
+        <di:waypoint x="363" y="425"/>
+        <di:waypoint x="450" y="250"/>
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</dmn:definitions>
