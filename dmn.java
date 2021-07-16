@@ -25,7 +25,12 @@ import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
-@Command(name = "dmn", mixinStandardHelpOptions = true)
+@Command(name = "dmn",
+    description = {"Evaluate a DMN model using the Drools DMN Engine.",
+                "The input DMN Context must be provided as a JSON object.",
+                "The result of the DMN model evaluation is emitted as a JSON object on STDOUT."},
+    footer = "See also: https://drools.org/learn/dmn.html",
+    mixinStandardHelpOptions = true)
 public class dmn implements Callable<Integer> {
 
     @Parameters(
@@ -41,6 +46,8 @@ public class dmn implements Callable<Integer> {
     )
     private String context;
 
+    private JsonMapper jsonMapper = JsonMapper.builder().build();
+
     public static void main(String[] args) throws Exception {
         int exitCode = new CommandLine(new dmn()).execute(args);
         System.exit(exitCode);
@@ -49,24 +56,18 @@ public class dmn implements Callable<Integer> {
     @Override
     public Integer call() {
         try {
-            if (context == null) {
-                var scanner = new Scanner(System.in).useDelimiter("\\A");
-                context = "{}";
-                if (scanner.hasNext()) {
-                    context = scanner.next();
-                }
-            }
+            initContext();
             DMNRuntime dmnRuntime = DMNRuntimeBuilder.fromDefaults()
                 .buildConfiguration()
                 .fromResources(List.of(new FileSystemResource(dmnModel)))
                 .getOrElseThrow(RuntimeException::new);
             @SuppressWarnings("unchecked")
-            Map<String, Object> readValue = JsonMapper.builder().build().readValue(readInputContext(), Map.class);
+            Map<String, Object> readValue = jsonMapper.readValue(context, Map.class);
             DMNContext dmnContext = new DynamicDMNContextBuilder(dmnRuntime.newContext(), dmnRuntime.getModels().get(0))
                 .populateContextWith(readValue);
             DMNResult dmnResult = dmnRuntime.evaluateAll(dmnRuntime.getModels().get(0), dmnContext);
-            final Object serialized = MarshallingStubUtils.stubDMNResult(dmnResult.getContext().getAll(), Object::toString);
-            System.out.println(JsonMapper.builder().build().writerWithDefaultPrettyPrinter().writeValueAsString(serialized));
+            var serialized = MarshallingStubUtils.stubDMNResult(dmnResult.getContext().getAll(), Object::toString);
+            System.out.println(jsonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(serialized));
         } catch (Exception e) {
             e.printStackTrace();
             return 1;
@@ -74,20 +75,17 @@ public class dmn implements Callable<Integer> {
         return 0;
     }
 
-    private String readInputContext() {
-
-        String wholeContext;
-
-        if (context != null) {
-            wholeContext = String.join(" ", context);
-        } else {
-            var scanner = new Scanner(System.in).useDelimiter("\\A");
-            wholeContext = "";
-            if (scanner.hasNext()) {
-                wholeContext = scanner.next();
+    /**
+     * Init context from STDIN if necessary.
+     */
+    private void initContext() {
+        if (context == null) {
+            context = "{}";
+            try (var scanner = new Scanner(System.in).useDelimiter("\\A")) {
+                if (scanner.hasNext()) {
+                    context = scanner.next();
+                }
             }
         }
-
-        return wholeContext.isEmpty() ? " {} ": wholeContext;
     }
 }
