@@ -1,0 +1,13 @@
+{
+    "catalogs": {},
+    "aliases": {
+        "dmn": {
+            "script-ref": "dmn.java",
+            "description": "Evaluate a DMN model using the Drools DMN Engine."
+        },
+        "feel": {
+            "script-ref": "feel.java",
+            "description": "Evaluate a FEEL expression using the Drools DMN Engine."
+        }
+    }
+}
