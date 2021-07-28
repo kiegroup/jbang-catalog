@@ -8,17 +8,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Set up JDK
-      uses: actions/setup-java@v1
+    - uses: actions/cache@v1
       with:
-        java-version: 11
-    - name: Cache Maven packages
-      uses: actions/cache@v2
-      with:
-        path: ~/.m2
-        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-        restore-keys: ${{ runner.os }}-m2
+        path: /root/.jbang
+        key: ${{ runner.os }}-jbang-${{ hashFiles('*.java') }}
+        restore-keys: |
+            ${{ runner.os }}-jbang-
     - name: jbang
       uses: jbangdev/jbang-action@v0.78.0
       with:
-        script: runTest.java
+        script: createissue.java
+        scriptargs: "my world"
+      env:
+        JBANG_REPO: /root/.jbang/repository
+
