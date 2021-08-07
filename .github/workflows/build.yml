@@ -1,7 +1,10 @@
 name: "build with jbang"
 
 on:
-  [ push, pull_request ]
+  push:
+  pull_request:
+  schedule: # setting up daily schedule as JBang scripts integrate org.kie RELEASEs
+    - cron:  '0 0 * * *'
 
 jobs:
   build:
