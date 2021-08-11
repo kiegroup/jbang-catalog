@@ -1,4 +1,4 @@
-![build status](https://github.com/tarilabs/jbang-catalog/actions/workflows/build.yml/badge.svg)
+![build status](https://github.com/kiegroup/jbang-catalog/actions/workflows/build.yml/badge.svg)
 
 # a KIE jbang-catalog
 
