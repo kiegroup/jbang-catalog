@@ -1,13 +1,22 @@
 {
-    "catalogs": {},
-    "aliases": {
-        "dmn": {
-            "script-ref": "dmn.java",
-            "description": "Evaluate a DMN model using the Drools DMN Engine."
-        },
-        "feel": {
-            "script-ref": "feel.java",
-            "description": "Evaluate a FEEL expression using the Drools DMN Engine."
-        }
+  "catalogs": {
+    "kiegroup": {
+      "catalog-ref": "/Users/mmortari/git/jbang-catalog/jbang-catalog.json"
     }
+  },
+  "aliases": {
+    "dmn": {
+      "script-ref": "dmn.java",
+      "description": "Evaluate a DMN model using the Drools DMN Engine."
+    },
+    "feel": {
+      "script-ref": "feel.java",
+      "description": "Evaluate a FEEL expression using the Drools DMN Engine."
+    },
+    "xls2dmn": {
+      "script-ref": "xls2dmn.java",
+      "description": "JBang script proxy of the Converter for Excel (.xls/.xlsx) files containing DMN decision tables."
+    }
+  },
+  "templates": {}
 }

@@ -4,6 +4,7 @@
 //DEPS org.assertj:assertj-core:3.20.2
 //SOURCES dmn.java
 //SOURCES feel.java
+//SOURCES xls2dmn.java
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -86,6 +87,19 @@ public class runTest {
         String out = baos.toString().trim();
         Assertions.assertThat(exitCode).isEqualTo(0);
         Assertions.assertThat(out).isEqualTo("true");
+    }
+
+    @Test
+    public void testXLS2DMN() {
+        int exitCode1 = new CommandLine(new xls2dmn()).execute(List.of("tests/Loan_approvals.xlsx").toArray(new String[]{}));
+        Assertions.assertThat(exitCode1).isEqualTo(0);
+        wireIO();
+        final String JSON = "{\"FICO Score\":765,\"DTI Ratio\":0.1,\"PITI Ratio\":0.1}";
+        int exitCode2 = new CommandLine(new dmn()).execute(List.of("tests/Loan_approvals.xlsx.dmn", JSON).toArray(new String[]{})); // please notice using converted file.
+        resetIO();
+        String out = baos.toString().trim();
+        Assertions.assertThat(exitCode2).isEqualTo(0);
+        Assertions.assertThat(out).contains("\"Loan Approval\" : \"Approved\"");
     }
 
     private void wireIO() {
