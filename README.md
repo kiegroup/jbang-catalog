@@ -31,7 +31,7 @@ jbang dmn@kiegroup --help
 
 Use this JBang script to convert Excel (.xls/.xlsx) files containing [DMN decision tables](https://drools.org/learn/dmn.html) using the Drools DMN Engine experimental converter.
 
-For the details about the Converter and the conventions to be used in the Excel file, please reference the [Converter documentation](nhttps://github.com/kiegroup/drools/tree/main/kie-dmn/kie-dmn-xls2dmn-cli#readme).
+For the details about the Converter and the conventions to be used in the Excel file, please reference the [Converter documentation](https://github.com/kiegroup/drools/tree/main/kie-dmn/kie-dmn-xls2dmn-cli#readme).
 
 In action:
 
