@@ -9,6 +9,13 @@ For more information on JBang, see:
 - [Installation](https://www.jbang.dev/documentation/guide/latest/installation.html)
 - [Usage](https://www.jbang.dev/documentation/guide/latest/usage.html)
 
+Scripts:
+
+* [DMN](#dmn)
+* [Converter for Excel (.xls/.xlsx) files containing DMN decision tables](#converter-for-excel-xlsxlsx-files-containing-dmn-decision-tables)
+* [FEEL](#feel)
+* [OptaPlanner Hello World](#optaplanner-hello-world)
+
 # DMN
 
 Use this JBang script to evaluate a [DMN model](https://drools.org/learn/dmn.html) using the Drools DMN Engine.
@@ -63,4 +70,12 @@ Usage help:
 
 ```bash
 jbang feel@kiegroup --help
+```
+
+# OptaPlanner Hello World
+
+Demo that assigns lessons to timeslots and rooms to produce a better schedule for teachers and students.
+
+```bash
+jbang optaplannerHelloWorld@kiegroup
 ```
