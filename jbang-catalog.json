@@ -13,6 +13,10 @@
       "script-ref": "feel.java",
       "description": "Evaluate a FEEL expression using the Drools DMN Engine."
     },
+    "optaplannerHelloWorld": {
+      "script-ref": "optaplannerHelloWorld.java",
+      "description": "OptaPlanner Hello world to solve a school timetable to assign lessons to timeslots and rooms."
+    },
     "xls2dmn": {
       "script-ref": "xls2dmn.java",
       "description": "JBang script proxy of the Converter for Excel (.xls/.xlsx) files containing DMN decision tables."
