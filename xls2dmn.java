@@ -1,6 +1,6 @@
 ///usr/bin/env jbang "$0" "$@" ; exit $?
 //JAVA 11+
-//DEPS org.kie:kie-dmn-xls2dmn-cli:RELEASE
+//DEPS org.kie:kie-dmn-xls2dmn-cli:7.71.0.Final
 //DEPS info.picocli:picocli:4.2.0
 //DEPS com.fasterxml.jackson.core:jackson-databind:2.10.5.1
 //DEPS org.slf4j:slf4j-simple:1.7.30
